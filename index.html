@@ -478,9 +478,12 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    showToast('Account created successfully!', 'success');
-                    signupModal.classList.remove('active');
-                    e.target.reset();
+                    showToast('Account created successfully! Redirecting...', 'success');
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('company', JSON.stringify(data.company));
+                    setTimeout(() => {
+                        window.location.href = 'https://3000-iles0wqjbftibf3alzbw0-ba44b8a5.sg1.manus.computer';
+                    }, 1500);
                 } else { showToast(data.error || 'Signup failed', 'error'); }
             } catch (err) { showToast('Connection error', 'error'); }
             finally {
