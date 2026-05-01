@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlElement">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CargoFlow - Advanced Fleet & Logistics Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="translations.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        * { scroll-behavior: smooth; }
+        html[lang="en"] * { font-family: 'Inter', sans-serif; }
+        html[lang="ar"] * { font-family: 'Cairo', sans-serif; }
+        html[lang="ar"] { direction: rtl; }
         h1, h2, h3 { font-family: 'Sora', sans-serif; }
+        html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3 { font-family: 'Cairo', sans-serif; }
         .gradient-text {
             background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
             -webkit-background-clip: text;
@@ -69,9 +75,33 @@
             padding: 1rem 1.5rem; border-radius: 0.5rem;
             color: white; animation: slideInRight 0.3s ease; z-index: 2000;
         }
+        html[lang="ar"] .toast { right: auto; left: 20px; }
         @keyframes slideInRight { from { transform: translateX(400px); } to { transform: translateX(0); } }
         .toast.success { background-color: #10b981; }
         .toast.error { background-color: #ef4444; }
+        .lang-switcher {
+            display: flex;
+            gap: 8px;
+            padding: 4px;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+        .lang-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+        }
+        .lang-btn.active {
+            background: white;
+            color: #0ea5e9;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -83,13 +113,17 @@
                 <span class="text-2xl font-extrabold tracking-tight">Cargo<span class="text-sky-600">Flow</span></span>
             </div>
             <div class="hidden md:flex gap-10">
-                <a href="#features" class="text-gray-600 font-medium hover:text-sky-600 transition">Features</a>
-                <a href="#solutions" class="text-gray-600 font-medium hover:text-sky-600 transition">Solutions</a>
-                <a href="#pricing" class="text-gray-600 font-medium hover:text-sky-600 transition">Pricing</a>
+                <a href="#features" class="text-gray-600 font-medium hover:text-sky-600 transition" data-i18n="nav_features"></a>
+                <a href="#solutions" class="text-gray-600 font-medium hover:text-sky-600 transition" data-i18n="nav_solutions"></a>
+                <a href="#pricing" class="text-gray-600 font-medium hover:text-sky-600 transition" data-i18n="nav_pricing"></a>
             </div>
             <div class="flex items-center gap-4">
-                <button id="signInBtn" class="text-gray-700 font-semibold hover:text-sky-600 transition">Login</button>
-                <button id="trialBtnNav" class="btn-primary text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-sky-200">Get Started</button>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ar">العربية</button>
+                </div>
+                <button id="signInBtn" class="text-gray-700 font-semibold hover:text-sky-600 transition" data-i18n="nav_login"></button>
+                <button id="trialBtnNav" class="btn-primary text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-sky-200" data-i18n="nav_get_started"></button>
             </div>
         </div>
     </nav>
@@ -104,21 +138,15 @@
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
                         </span>
-                        New: AI-Powered Route Optimization
+                        <span data-i18n="hero_badge"></span>
                     </div>
-                    <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8">
-                        The Operating System for <span class="gradient-text">Modern Logistics</span>
-                    </h1>
-                    <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-xl">
-                        CargoFlow empowers transport companies with real-time visibility, automated workflows, and data-driven insights to scale operations efficiently.
-                    </p>
+                    <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8" data-i18n="hero_title"></h1>
+                    <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-xl" data-i18n="hero_subtitle"></p>
                     <div class="flex flex-col sm:flex-row gap-5">
-                        <button id="trialBtnHero" class="btn-primary text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-sky-200">
-                            Start Your 7-Day Free Trial
-                        </button>
+                        <button id="trialBtnHero" class="btn-primary text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-sky-200" data-i18n="hero_trial_btn"></button>
                         <button id="demoBtnHero" class="bg-white border-2 border-gray-200 text-gray-900 px-10 py-4 rounded-2xl font-bold text-lg hover:border-sky-500 hover:text-sky-600 transition flex items-center justify-center gap-2">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                            Watch Demo
+                            <span data-i18n="hero_demo_btn"></span>
                         </button>
                     </div>
                     <div class="mt-10 flex items-center gap-6 text-gray-500 font-medium">
@@ -127,7 +155,7 @@
                             <img class="w-10 h-10 rounded-full border-2 border-white bg-gray-200" src="https://i.pravatar.cc/100?u=2" alt="User">
                             <img class="w-10 h-10 rounded-full border-2 border-white bg-gray-200" src="https://i.pravatar.cc/100?u=3" alt="User">
                         </div>
-                        <p>Trusted by 500+ logistics teams worldwide</p>
+                        <p data-i18n="hero_trusted"></p>
                     </div>
                 </div>
                 <div class="relative">
@@ -156,19 +184,19 @@
             <div id="statsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div>
                     <p class="text-4xl font-extrabold text-gray-900 mb-1" id="stat-companies">234+</p>
-                    <p class="text-gray-500 font-medium">Active Companies</p>
+                    <p class="text-gray-500 font-medium" data-i18n="stat_companies"></p>
                 </div>
                 <div>
                     <p class="text-4xl font-extrabold text-gray-900 mb-1" id="stat-vehicles">5,678+</p>
-                    <p class="text-gray-500 font-medium">Vehicles Managed</p>
+                    <p class="text-gray-500 font-medium" data-i18n="stat_vehicles"></p>
                 </div>
                 <div>
                     <p class="text-4xl font-extrabold text-gray-900 mb-1" id="stat-trips">45k+</p>
-                    <p class="text-gray-500 font-medium">Trips Completed</p>
+                    <p class="text-gray-500 font-medium" data-i18n="stat_trips"></p>
                 </div>
                 <div>
                     <p class="text-4xl font-extrabold text-gray-900 mb-1" id="stat-countries">12+</p>
-                    <p class="text-gray-500 font-medium">Countries Covered</p>
+                    <p class="text-gray-500 font-medium" data-i18n="stat_countries"></p>
                 </div>
             </div>
         </div>
@@ -178,8 +206,8 @@
     <section id="features" class="py-24 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-20">
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-6">Everything You Need to <span class="text-sky-600">Scale</span></h2>
-                <p class="text-xl text-gray-600">A comprehensive suite of tools designed to eliminate manual work and maximize your fleet's potential.</p>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6"><span data-i18n="features_title"></span> <span class="text-sky-600">Scale</span></h2>
+                <p class="text-xl text-gray-600" data-i18n="features_subtitle"></p>
             </div>
 
             <div id="featuresContainer" class="grid md:grid-cols-3 gap-10">
@@ -196,15 +224,15 @@
                     <img src="assets/dashboard-preview.jpg" alt="Dashboard Preview" class="rounded-3xl shadow-2xl border border-gray-800">
                 </div>
                 <div class="order-1 lg:order-2">
-                    <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight">Real-Time Visibility into Your <span class="text-sky-400">Entire Operation</span></h2>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight"><span data-i18n="solutions_title"></span> <span class="text-sky-400">Entire Operation</span></h2>
                     <div class="space-y-8">
                         <div class="flex gap-5">
                             <div class="flex-shrink-0 w-12 h-12 bg-sky-500/20 rounded-xl flex items-center justify-center text-sky-400">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold mb-2">Live GPS Tracking</h3>
-                                <p class="text-gray-400">Monitor every vehicle's location, speed, and route adherence in real-time on a high-resolution map.</p>
+                                <h3 class="text-xl font-bold mb-2" data-i18n="sol_gps_title"></h3>
+                                <p class="text-gray-400" data-i18n="sol_gps_desc"></p>
                             </div>
                         </div>
                         <div class="flex gap-5">
@@ -212,8 +240,8 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold mb-2">Automated Reporting</h3>
-                                <p class="text-gray-400">Generate detailed reports on fuel consumption, driver performance, and maintenance schedules automatically.</p>
+                                <h3 class="text-xl font-bold mb-2" data-i18n="sol_report_title"></h3>
+                                <p class="text-gray-400" data-i18n="sol_report_desc"></p>
                             </div>
                         </div>
                         <div class="flex gap-5">
@@ -221,8 +249,8 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold mb-2">Smart Dispatching</h3>
-                                <p class="text-gray-400">Assign the right driver to the right job based on proximity, availability, and vehicle capacity.</p>
+                                <h3 class="text-xl font-bold mb-2" data-i18n="sol_dispatch_title"></h3>
+                                <p class="text-gray-400" data-i18n="sol_dispatch_desc"></p>
                             </div>
                         </div>
                     </div>
@@ -235,8 +263,8 @@
     <section id="pricing" class="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-20">
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-6">Simple, Transparent Pricing</h2>
-                <p class="text-xl text-gray-600">No hidden fees. Scale your plan as your fleet grows.</p>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6" data-i18n="pricing_title"></h2>
+                <p class="text-xl text-gray-600" data-i18n="pricing_subtitle"></p>
             </div>
 
             <div id="pricingContainer" class="grid md:grid-cols-3 gap-10">
@@ -254,18 +282,18 @@
                         <div class="w-8 h-8 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-lg"></div>
                         <span class="text-2xl font-bold">CargoFlow</span>
                     </div>
-                    <p class="text-gray-500 leading-relaxed">The world's most advanced platform for modern logistics and fleet management.</p>
+                    <p class="text-gray-500 leading-relaxed" data-i18n="footer_desc"></p>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-6">Product</h4>
+                    <h4 class="font-bold mb-6" data-i18n="footer_product"></h4>
                     <ul class="space-y-4 text-gray-500">
-                        <li><a href="#" class="hover:text-sky-600 transition">Features</a></li>
+                        <li><a href="#" class="hover:text-sky-600 transition" data-i18n="nav_features"></a></li>
                         <li><a href="#" class="hover:text-sky-600 transition">Route Planning</a></li>
                         <li><a href="#" class="hover:text-sky-600 transition">Driver App</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-6">Company</h4>
+                    <h4 class="font-bold mb-6" data-i18n="footer_company"></h4>
                     <ul class="space-y-4 text-gray-500">
                         <li><a href="#" class="hover:text-sky-600 transition">About Us</a></li>
                         <li><a href="#" class="hover:text-sky-600 transition">Customers</a></li>
@@ -273,7 +301,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-6">Support</h4>
+                    <h4 class="font-bold mb-6" data-i18n="footer_support"></h4>
                     <ul class="space-y-4 text-gray-500">
                         <li><a href="#" class="hover:text-sky-600 transition">Help Center</a></li>
                         <li><a href="#" class="hover:text-sky-600 transition">API Docs</a></li>
@@ -282,7 +310,7 @@
                 </div>
             </div>
             <div class="pt-8 border-t border-gray-100 flex flex-col md:row justify-between items-center gap-4 text-gray-400 text-sm">
-                <p>&copy; 2026 CargoFlow Technologies Inc. All rights reserved.</p>
+                <p data-i18n="footer_rights"></p>
                 <div class="flex gap-8">
                     <a href="#" class="hover:text-gray-600">Privacy Policy</a>
                     <a href="#" class="hover:text-gray-600">Terms of Service</a>
@@ -295,33 +323,59 @@
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold">Start Your Free Trial</h3>
+                <h3 class="text-2xl font-bold" data-i18n="modal_signup_title"></h3>
                 <button class="closeModal text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
             </div>
             <form id="signupForm" class="space-y-5">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Company Name</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="modal_company"></label>
                     <input type="text" name="name" required placeholder="e.g. Global Logistics Ltd" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Work Email</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="modal_email"></label>
                     <input type="email" name="email" required placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Password</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="modal_password"></label>
                     <input type="password" name="password" required minlength="8" placeholder="Min. 8 characters" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition">
                 </div>
                 <button type="submit" class="btn-primary w-full text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-sky-100">
-                    <span id="submitText">Create My Account</span>
+                    <span id="submitText" data-i18n="modal_submit"></span>
                     <span id="submitLoader" class="loading" style="display: none;"></span>
                 </button>
-                <p class="text-xs text-gray-500 text-center">No credit card required. By signing up, you agree to our <a href="#" class="text-sky-600 underline">Terms</a>.</p>
+                <p class="text-xs text-gray-500 text-center" data-i18n="modal_terms"></p>
             </form>
         </div>
     </div>
 
     <script>
         const API_URL = 'https://5000-iles0wqjbftibf3alzbw0-ba44b8a5.sg1.manus.computer';
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            document.getElementById('htmlElement').lang = lang;
+            document.getElementById('htmlElement').dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            updateTranslations();
+        }
+
+        function updateTranslations() {
+            const t = translations[currentLanguage];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
 
         const signupModal = document.getElementById('signupModal');
         document.querySelectorAll('.closeModal').forEach(btn => {
@@ -374,16 +428,17 @@
                 const response = await fetch(`${API_URL}/public/plans`);
                 const data = await response.json();
                 const container = document.getElementById('pricingContainer');
+                const t = translations[currentLanguage];
                 container.innerHTML = data.plans.map(p => {
                     const isPopular = p.id === 'professional';
                     return `
                         <div class="relative card-hover ${isPopular ? 'bg-white border-2 border-sky-500 shadow-2xl scale-105' : 'bg-white border border-gray-100 shadow-sm'} rounded-3xl p-10">
-                            ${isPopular ? '<div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-sky-500 text-white px-6 py-1.5 rounded-full text-sm font-bold">Most Popular</div>' : ''}
+                            ${isPopular ? `<div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-sky-500 text-white px-6 py-1.5 rounded-full text-sm font-bold">${t.pricing_popular}</div>` : ''}
                             <h3 class="text-2xl font-bold mb-2">${p.name}</h3>
                             <p class="text-gray-500 mb-8">${p.description}</p>
                             <div class="flex items-baseline gap-1 mb-8">
                                 <span class="text-5xl font-extrabold">${p.priceFormatted}</span>
-                                <span class="text-gray-500 font-medium">/mo</span>
+                                <span class="text-gray-500 font-medium">${t.pricing_mo}</span>
                             </div>
                             <ul class="space-y-5 mb-10">
                                 <li class="flex items-center gap-3 font-medium text-gray-700">
@@ -400,7 +455,7 @@
                                 </li>
                             </ul>
                             <button class="startTrialBtn w-full ${isPopular ? 'btn-primary text-white' : 'bg-gray-900 text-white'} py-4 rounded-2xl font-bold text-lg transition">
-                                Get Started
+                                ${t.pricing_get_started}
                             </button>
                         </div>
                     `;
@@ -438,6 +493,7 @@
         document.getElementById('trialBtnHero').addEventListener('click', () => signupModal.classList.add('active'));
 
         document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLanguage);
             loadStats();
             loadFeatures();
             loadPricing();
